@@ -1,24 +1,97 @@
-# Compiled class file
-*.class
-
-# Log file
+# -----------------------------
+# Global
+# -----------------------------
+/.env
+/.env.local
+.DS_Store
 *.log
+logs/
+tmp/
+*.tmp
 
-# BlueJ files
-*.ctxt
+# ========================================
+# FRONTEND (React.js)
+# ========================================
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Package Files #
+# production build
+build/
+dist/
+
+# misc
+.cache/
+.eslintcache
+.parcel-cache/
+coverage/
+*.tsbuildinfo
+
+# React specific
+/.pnp
+.pnp.js
+.vscode/
+.idea/
+
+# dotenv
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ===============================
+# BACKEND (Java / Spring Boot)
+# ===============================
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+
+# IntelliJ / Eclipse / VSCode
+*.iml
+.idea/
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+
+# JVM
+*.class
 *.jar
 *.war
-*.nar
 *.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*
+
+# Spring Boot specific
+spring.log
+
+# =================================
+# OS files (macOS / Windows / Linux)
+# =================================
+Thumbs.db
+Desktop.ini
+
+# =================================
+# Docker
+# =================================
+docker-data/
+.dockerignore
+
+# =================================
+# Logs
+# =================================
+*.log
+logs/

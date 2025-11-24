@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: Code Fury API
+  version: 1.0.0
+  description: Base API specification for backend services.
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok

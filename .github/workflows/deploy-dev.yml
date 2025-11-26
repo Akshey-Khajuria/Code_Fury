@@ -1,1 +1,35 @@
 # Dev Deploy Workflow
+name: Deploy Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Copy Files to Dev Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USER }}
+          key: ${{ secrets.DEV_KEY }}
+          source: "./"
+          target: "~/code_fury"
+
+      - name: SSH + Deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USER }}
+          key: ${{ secrets.DEV_KEY }}
+          script: |
+            cd ~/code_fury
+            chmod +x Scripts/deploy.sh
+            ./Scripts/deploy.sh

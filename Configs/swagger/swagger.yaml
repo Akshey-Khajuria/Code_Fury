@@ -1,25 +1,81 @@
 openapi: 3.0.3
 info:
   title: Code Fury API
+  description: API documentation for the Code Fury backend service.
   version: 1.0.0
-  description: Base API specification for backend services.
 
 servers:
-  - url: http://localhost:5000
-    description: Local development server
+  - url: http://localhost:8080
+    description: Local Dev Server
+  # - url: https://api.yourdomain.com
+  #   description: Production API
 
 paths:
-  /health:
-    get:
-      summary: Health check endpoint
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: User registered successfully
+        "400":
+          description: Invalid request
+
+  /auth/login:
+    post:
+      summary: User login
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ok
+          description: Login successful
+        "401":
+          description: Unauthorized
+
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - username
+        - email
+        - password
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string

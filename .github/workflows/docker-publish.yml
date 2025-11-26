@@ -1,1 +1,37 @@
 # Docker Publish Workflow
+name: Docker Publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Backend/**"
+      - "Frontend/**"
+      - "docker/**"
+      - "Dockerfile*"
+      - ".github/workflows/docker-publish.yml"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build Backend Image
+        run: docker build -t ${{ secrets.REGISTRY_USER }}/codefury-backend:latest Backend
+
+      - name: Build Frontend Image
+        run: docker build -t ${{ secrets.REGISTRY_USER }}/codefury-frontend:latest Frontend
+
+      - name: Push Images
+        run: |
+          docker push ${{ secrets.REGISTRY_USER }}/codefury-backend:latest
+          docker push ${{ secrets.REGISTRY_USER }}/codefury-frontend:latest

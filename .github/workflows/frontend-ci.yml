@@ -1,1 +1,54 @@
 # Frontend CI Workflow
+name: Frontend CI
+
+on:
+  push:
+    paths:
+      - "Frontend/**"
+      - ".github/workflows/frontend-ci.yml"
+  pull_request:
+    paths:
+      - "Frontend/**"
+
+jobs:
+  build:
+    name: Build & Test Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache Node Modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            Frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('Frontend/package-lock.json') }}
+
+      - name: Install deps
+        working-directory: Frontend
+        run: npm ci
+
+      - name: Lint
+        working-directory: Frontend
+        run: npm run lint --if-present
+
+      - name: Test
+        working-directory: Frontend
+        run: npm test --if-present
+
+      - name: Build
+        working-directory: Frontend
+        run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: Frontend/build

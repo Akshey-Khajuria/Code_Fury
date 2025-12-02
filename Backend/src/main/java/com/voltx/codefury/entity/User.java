@@ -1,4 +1,9 @@
-package com.voltx.codefury;
+package com.voltx.codefury.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 @Entity
 public class User {
@@ -8,6 +13,7 @@ public class User {
     @Indexed(unique = true)
     private String email;
     private String password_hash;
+    private String name;
 
     @Indexed(unique = true)
     private String username;
@@ -38,6 +44,12 @@ public class User {
     }
     public void setPassword_hash(String password_hash) {
         this.password_hash = password_hash;
+    }
+    public void setName(String username) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
     }
     public String getUsername() {
         return username;

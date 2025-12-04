@@ -1,17 +1,20 @@
 package com.voltx.codefury.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-@Entity
+@Document(collection = "users")
 public class User {
     @Id
     private String id;
 
     @Indexed(unique = true)
     private String email;
+
+    @Transient
+    private String password;
     private String password_hash;
     private String name;
 
@@ -39,6 +42,9 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getPassword() {
+        return password;
+    }
     public String getPassword_hash() {
         return password_hash;
     }
@@ -46,7 +52,7 @@ public class User {
         this.password_hash = password_hash;
     }
     public void setName(String username) {
-        this.name = name;
+        this.name = username;
     }
     public String getName() {
         return name;

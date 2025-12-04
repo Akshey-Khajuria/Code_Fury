@@ -24,10 +24,11 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         logger.info("Registration requested for {}", user.getEmail());
-        String email = user.getEmail();
-        String pass = user.getPassword_hash();
-        String name = user.getName();
-        String response = userService.registerLocal(email, pass, name);
+        // String email = user.getEmail();
+        // String pass = user.getPassword_hash();
+        // String name = user.getName();
+        // String response = userService.registerLocal(email, pass, name);
+        String response = userService.registerLocal(user);
         return ResponseEntity.ok(response);
     }
 }

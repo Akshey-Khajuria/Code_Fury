@@ -11,6 +11,5 @@ public class CodeFuryApplicationStarter{
     public static void main(String[] args) {
         SpringApplication.run(CodeFuryApplicationStarter.class, args);
         logger.info("Application Started Successfully");
-
     }
 }

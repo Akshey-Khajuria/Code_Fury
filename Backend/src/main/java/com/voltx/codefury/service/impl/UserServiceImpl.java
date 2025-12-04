@@ -24,21 +24,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String registerLocal(String email, String rawPassword, String name){
-        if(repo.findByEmail(email).isPresent()){
-            logger.warn(Responses.EMAIL_ALREADY_IN_USE, email);
-            return Responses.EMAIL_ALREADY_IN_USE;            
+    public String registerLocal(User user){
+        String rawPassword = user.getPassword();
+        if(!isNewUser(user)){
+            return Responses.USER_ALREADY_EXISTS;
         }
-        User u = new User();
-        u.setEmail(email);
-        u.setPassword_hash(encoder.encode(rawPassword));
-        u.setName(name);
-        repo.save(u);
-        logger.info(Responses.REGISTRATION_SUCCESSFUL, email);
+        user.setPassword_hash(encoder.encode(rawPassword));
+        repo.save(user);
+        logger.info(Responses.REGISTRATION_SUCCESSFUL, user.getEmail());
         return Responses.REGISTRATION_SUCCESSFUL;
     }
 
     public Optional<User> findByEmail(String email){
         return repo.findByEmail(email);
+    }
+
+    public Optional<User> findByUsername(String username){
+        return repo.findByUsername(username);
+    }
+
+    private boolean isNewUser(User user){
+        String email = user.getEmail();
+        String username = user.getUsername();
+        if(repo.findByEmail(email).isPresent()){
+            logger.warn(Responses.EMAIL_ALREADY_IN_USE, email);
+            return false;            
+        }
+        if(repo.findByUsername(username).isPresent()){
+            logger.warn(Responses.USERNAME_ALREADY_IN_USE, username);
+            return false;            
+        }
+        return true;
     }
 }

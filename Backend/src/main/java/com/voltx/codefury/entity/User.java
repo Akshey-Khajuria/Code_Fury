@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 @Entity
 public class User {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    private String id;
 
     @Indexed(unique = true)
     private String email;
@@ -27,10 +27,10 @@ public class User {
     private String google_auth_id;
 
     // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getEmail() {

@@ -3,6 +3,7 @@ package com.voltx.codefury.entity;
 import jakarta.persistence.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 @Document(collection = "users")
@@ -27,7 +28,9 @@ public class User {
     private int questions_attempted;
     private int challenges_played;
     private int challenges_won;
-    private String google_auth_id;
+
+    @Field("google_auth_id")
+    private String googleAuthId;
 
     // Getters and Setters
     public String getId() {
@@ -99,10 +102,10 @@ public class User {
     public void setChallenges_won(int challenges_won) {
         this.challenges_won = challenges_won;
     }
-    public String getGoogle_auth_id() {
-        return google_auth_id;
+    public String getGoogleAuthId() {
+        return googleAuthId;
     }
-    public void setGoogle_auth_id(String google_auth_id) {
-        this.google_auth_id = google_auth_id;
+    public void setGoogleAuthId(String googleAuthId) {
+        this.googleAuthId = googleAuthId;
     }
 }

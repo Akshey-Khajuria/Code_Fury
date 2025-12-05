@@ -5,4 +5,5 @@ public class Responses {
     public static final String REGISTRATION_SUCCESSFUL = "Registered successfully";
     public static final String USERNAME_ALREADY_IN_USE = "Username already in use";
     public static final String USER_ALREADY_EXISTS = "User already exists";
+    public static final String INVALID_OAUTH_DATA = "Invalid OAuth2 data provided";
 }

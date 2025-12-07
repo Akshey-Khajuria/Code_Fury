@@ -1,8 +1,6 @@
 package com.voltx.codefury.auth.security;
 
-import com.voltx.codefury.entity.User;
 import com.voltx.codefury.service.UserService;
-import com.voltx.codefury.auth.security.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -44,7 +44,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // for APIs; enable with CSRF protection for browser forms
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/oauth2/**", "/public/**").permitAll()
+                .requestMatchers("/auth/**", "/oauth2/**", "/public/**", "/api/problems/*").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2

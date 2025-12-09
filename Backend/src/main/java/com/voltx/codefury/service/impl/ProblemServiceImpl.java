@@ -24,4 +24,10 @@ public class ProblemServiceImpl implements ProblemService {
         logger.info("Fetching all problems from the database");
         return repo.findAll();
     }
+
+    @Override
+    public List<Problem> getProblemsByDifficulty(String difficulty) {
+        logger.info("Fetching problems with difficulty: {}", difficulty);
+        return repo.findByDifficulty(difficulty);
+    }
 }

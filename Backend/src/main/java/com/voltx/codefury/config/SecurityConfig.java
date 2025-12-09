@@ -4,12 +4,14 @@ import com.voltx.codefury.auth.security.OAuth2SuccessHandler;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -44,7 +46,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // for APIs; enable with CSRF protection for browser forms
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/oauth2/**", "/public/**", "/api/problems/*").permitAll()
+                .requestMatchers("/auth/**", "/oauth2/**", "/public/**", "/api/problems/**").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
@@ -53,7 +55,9 @@ public class SecurityConfig {
                 .successHandler(oAuth2SuccessHandler)
             )
             .sessionManagement(s -> s.disable()) // stateless with JWT cookie
-            .httpBasic(Customizer.withDefaults());
+            .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+            // .httpBasic(Customizer.withDefaults())
+            ;
 
         return http.build();
     }

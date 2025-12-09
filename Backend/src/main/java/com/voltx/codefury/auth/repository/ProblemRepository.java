@@ -10,5 +10,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface ProblemRepository extends MongoRepository<Problem, String>{
     //get all problems in db
     public List<Problem> findAll();
-    // public Optional<Problem> findByProblemId(String title);
+    public List<Problem> findByDifficulty(String difficulty);
 }

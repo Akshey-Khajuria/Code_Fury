@@ -9,4 +9,5 @@ public class Responses {
     public static final String INVALID_OAUTH_DATA = "Invalid OAuth2 data provided";
     public static final String INVALID_CREDENTIALS = "Invalid credentials provided";
     public static final String INVALID_DIFFICULTY = "Invalid difficulty level provided";
+    public static final String PROBLEM_ADDED_SUCCESSFULLY = "Problem added successfully";
 }

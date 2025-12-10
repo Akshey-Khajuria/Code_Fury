@@ -9,6 +9,8 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -47,6 +49,27 @@ public class ProblemController {
             logger.error("Invalid difficulty level provided: {}", difficulty);
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @GetMapping("/byId/{problemId}")
+    public ResponseEntity<Problem> getProblemById(@PathVariable Long problemId) {
+        logger.info("Fetching problem with ID: {}", problemId);
+        Problem problem = problemService.getProblemById(problemId);
+        if (problem != null) {
+            return ResponseEntity.ok(problem);
+        } else {
+            logger.warn("Problem not found with ID: {}", problemId);
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    
+    @PostMapping("/add")
+    public ResponseEntity<String> postMethodName(@RequestBody Problem problem) {
+        String response = problemService.addProblem(problem);
+        if(response!=Responses.PROBLEM_ADDED_SUCCESSFULLY){
+            return ResponseEntity.badRequest().body(response);
+        }
+        return ResponseEntity.ok(response);
     }
     
 }

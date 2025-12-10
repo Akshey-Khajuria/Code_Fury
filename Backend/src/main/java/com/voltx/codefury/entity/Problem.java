@@ -6,25 +6,28 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 
 @Document(collection = "problems")
 public class Problem {
     @Id
     @Indexed(unique = true)
-    private String problem_id;
+    @Field("problem_id")
+    private int problemId;
     
     private String title;
     private String description;
     private Difficulty difficulty;
     private String constraints;
-    private List<TestCase> testCases;
+    private List<TestCase> sample_tests;
 
     // Getters and Setters
-    public String getProblem_id() {
-        return problem_id;
+    public int getProblemId() {
+        return problemId;
     }
-    public void setProblem_id(String problem_id) {
-        this.problem_id = problem_id;
+    public void setProblemId(int problemId) {
+        this.problemId = problemId;
     }
     public String getTitle() {
         return title;
@@ -50,10 +53,10 @@ public class Problem {
     public void setConstraints(String constraints) {
         this.constraints = constraints;
     }
-    public List<TestCase> getTestCases() {
-        return testCases;
+    public List<TestCase> getSample_tests() {
+        return sample_tests;
     }
-    public void setTestCases(List<TestCase> testCases) {
-        this.testCases = testCases;
+    public void setSample_tests(List<TestCase> sample_tests) {
+        this.sample_tests = sample_tests;
     }
 }

@@ -10,4 +10,10 @@ public class Responses {
     public static final String INVALID_CREDENTIALS = "Invalid credentials provided";
     public static final String INVALID_DIFFICULTY = "Invalid difficulty level provided";
     public static final String PROBLEM_ADDED_SUCCESSFULLY = "Problem added successfully";
+    public static final String UNSUPPORTED_LANGUAGE = "Unsupported programming language";
+    public static final String PROBLEM_SOLVED_SUCCESSFULLY = "Problem solved successfully";
+    public static final String INVALID_PROBLEM_ID = "Invalid problem ID provided";
+    public static final String WRONG_ANSWER = "Wrong answer";
+    public static final String ALL_TESTCASES_PASSED = "All test cases passed";
+    public static final String RUN_SUCCESSFUL = "Code ran successfully";
 }

@@ -10,4 +10,5 @@ public interface ProblemRepository extends MongoRepository<Problem, String>{
     public List<Problem> findByDifficulty(String difficulty);
     public Problem findByProblemId(Long problemId);
     public Problem save(Problem problem);
+    public boolean existsByProblemId(Long problemId);
 }

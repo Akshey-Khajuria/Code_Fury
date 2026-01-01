@@ -8,6 +8,7 @@ import com.voltx.codefury.service.ProblemService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.voltx.codefury.entity.Problem;
 import com.voltx.codefury.enums.Difficulty;
 import com.voltx.codefury.constants.Responses;
+import com.voltx.codefury.dto.SolveRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
@@ -63,10 +65,29 @@ public class ProblemController {
         }
     }
     
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROBLEM_SETTER')")
     @PostMapping("/add")
     public ResponseEntity<String> postMethodName(@RequestBody Problem problem) {
+        logger.info("Adding new problem: {}", problem.getTitle());
+
         String response = problemService.addProblem(problem);
         if(response!=Responses.PROBLEM_ADDED_SUCCESSFULLY){
+            return ResponseEntity.badRequest().body(response);
+        }
+        logger.info("Problem added successfully: {}", problem.getTitle());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/solve")
+    public ResponseEntity<String> solveProblem(@RequestBody SolveRequest body) {
+        Long problemId = body.getProblemId();
+        String language = body.getLanguage();
+        String solution = body.getSolution();
+        String mode = body.getMode();
+
+        logger.info("Solving problem with ID: {}", problemId);
+        String response = problemService.solveProblem(problemId, language, solution, mode);
+        if(response!=Responses.PROBLEM_SOLVED_SUCCESSFULLY){
             return ResponseEntity.badRequest().body(response);
         }
         return ResponseEntity.ok(response);

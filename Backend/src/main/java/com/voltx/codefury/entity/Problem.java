@@ -4,6 +4,7 @@ import com.voltx.codefury.enums.Difficulty;
 import jakarta.persistence.Id;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -12,21 +13,26 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "problems")
 public class Problem {
     @Id
+    private ObjectId id;
+
     @Indexed(unique = true)
-    @Field("problem_id")
-    private int problemId;
+    // @Field("problem_id")
+    private Long problemId;
     
+    @Indexed(unique = true)
     private String title;
+    
     private String description;
     private Difficulty difficulty;
     private String constraints;
-    private List<TestCase> sample_tests;
+    private List<TestCase> sampleTestCases;
+    private List<TestCase> allTestCases;
 
     // Getters and Setters
-    public int getProblemId() {
+    public Long getProblemId() {
         return problemId;
     }
-    public void setProblemId(int problemId) {
+    public void setProblemId(Long problemId) {
         this.problemId = problemId;
     }
     public String getTitle() {
@@ -53,10 +59,16 @@ public class Problem {
     public void setConstraints(String constraints) {
         this.constraints = constraints;
     }
-    public List<TestCase> getSample_tests() {
-        return sample_tests;
+    public List<TestCase> getSampleTestCases() {
+        return sampleTestCases;
     }
-    public void setSample_tests(List<TestCase> sample_tests) {
-        this.sample_tests = sample_tests;
+    public void setSampleTestCases(List<TestCase> sampleTestCases) {
+        this.sampleTestCases = sampleTestCases;
+    }
+    public List<TestCase> getAllTestCases() {
+        return allTestCases;
+    }
+    public void setAllTestCases(List<TestCase> allTestCases) {
+        this.allTestCases = allTestCases;
     }
 }

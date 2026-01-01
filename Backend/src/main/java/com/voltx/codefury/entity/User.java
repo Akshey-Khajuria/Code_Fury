@@ -1,10 +1,14 @@
 package com.voltx.codefury.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.index.Indexed;
+import com.voltx.codefury.enums.Role;
 
 @Document(collection = "users")
 public class User {
@@ -16,7 +20,7 @@ public class User {
 
     @Transient
     private String password;
-    private String password_hash;
+    private String passwordHash;
     private String name;
 
     @Indexed(unique = true)
@@ -24,12 +28,16 @@ public class User {
 
     private int shards;
     private int rank;
-    private int questions_solved;
-    private int questions_attempted;
-    private int challenges_played;
-    private int challenges_won;
+    private int questionsSolved;
+    private int questionsAttempted;
+    private int challengesPlayed;
+    private int challengesWon;
 
-    @Field("google_auth_id")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    // @Field("google_auth_id")
     private String googleAuthId;
 
     // Getters and Setters
@@ -48,11 +56,11 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public String getPassword_hash() {
-        return password_hash;
+    public String getPasswordHash() {
+        return passwordHash;
     }
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
     public void setName(String username) {
         this.name = username;
@@ -78,34 +86,42 @@ public class User {
     public void setRank(int rank) {
         this.rank = rank;
     }
-    public int getQuestions_solved() {
-        return questions_solved;
+    public int getQuestionsSolved() {
+        return questionsSolved;
     }
-    public void setQuestions_solved(int questions_solved) {
-        this.questions_solved = questions_solved;
+    public void setQuestionsSolved(int questionsSolved) {
+        this.questionsSolved = questionsSolved;
     }
-    public int getQuestions_attempted() {
-        return questions_attempted; 
+    public int getQuestionsAttempted() {
+        return questionsAttempted; 
     }
-    public void setQuestions_attempted(int questions_attempted) {
-        this.questions_attempted = questions_attempted;
+    public void setQuestionsAttempted(int questionsAttempted) {
+        this.questionsAttempted = questionsAttempted;
     }
-    public int getChallenges_played() {
-        return challenges_played;
+    public int getChallengesPlayed() {
+        return challengesPlayed;
     }
-    public void setChallenges_played(int challenges_played) {
-        this.challenges_played = challenges_played;
+    public void setChallengesPlayed(int challengesPlayed) {
+        this.challengesPlayed = challengesPlayed;
     }
-    public int getChallenges_won() {
-        return challenges_won;
+    public int getChallengesWon() {
+        return challengesWon;
     }
-    public void setChallenges_won(int challenges_won) {
-        this.challenges_won = challenges_won;
+    public void setChallengesWon(int challengesWon) {
+        this.challengesWon = challengesWon;
     }
     public String getGoogleAuthId() {
         return googleAuthId;
     }
     public void setGoogleAuthId(String googleAuthId) {
         this.googleAuthId = googleAuthId;
+    }
+    public Role getRole() {
+        return role;
+    }
+    //restricted
+    public void setRole(Role role) {
+        // Default role is USER
+        this.role = Role.USER;
     }
 }

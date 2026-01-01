@@ -35,13 +35,16 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String userName = email.split("@")[0];
 
         var user = userService.upsertGoogleUser(providerId, email, name, userName);
-        String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+        // String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+        String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole().name());
+
 
         Cookie cookie = new Cookie("SESSION", token);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge((int)(jwtUtil.getExpirationMs() / 1000)); // you might need getter for expirationMs
         // in production: cookie.setSecure(true);
+        cookie.setSecure(false);
 
         response.addCookie(cookie);
 

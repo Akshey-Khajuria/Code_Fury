@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import com.voltx.codefury.enums.Role;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,7 +29,10 @@ public class UserServiceImpl implements UserService {
         if(!isNewUser(user)){
             return Responses.USER_ALREADY_EXISTS;
         }
-        user.setPassword_hash(encoder.encode(rawPassword));
+        //very important to set role here - overrides not allowed from outside
+        user.setRole(Role.USER);
+
+        user.setPasswordHash(encoder.encode(rawPassword));
         repo.save(user);
         logger.info(Responses.REGISTRATION_SUCCESSFUL, user.getEmail());
         return Responses.REGISTRATION_SUCCESSFUL;
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = new User();
+        user.setRole(Role.USER);
         user.setGoogleAuthId(googleAuthId);
         user.setEmail(email);
         user.setName(name);
@@ -80,7 +84,7 @@ public class UserServiceImpl implements UserService {
             logger.warn("Login failed: User not found for {}", user.getEmail());
             return Responses.INVALID_CREDENTIALS;
         }
-        if(!encoder.matches(user.getPassword(), matchedUser.getPassword_hash())){
+        if(!encoder.matches(user.getPassword(), matchedUser.getPasswordHash())){
             logger.warn("Login failed: Incorrect password for {}", user.getEmail());
             return Responses.INVALID_CREDENTIALS;
         }

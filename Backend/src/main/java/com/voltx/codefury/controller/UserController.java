@@ -88,12 +88,14 @@ public class UserController {
     }
 
     private void addSessionCookie(HttpServletResponse response, User user) {
-        String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+        // String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+        String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole().name());
         Cookie cookie = new Cookie("SESSION", token);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge((int) (jwtUtil.getExpirationMs() / 1000));
-        cookie.setSecure(true);
+        // cookie.setSecure(true);
+        cookie.setSecure(false); // Set to false for development; true for production
         response.addCookie(cookie);
     }
 }

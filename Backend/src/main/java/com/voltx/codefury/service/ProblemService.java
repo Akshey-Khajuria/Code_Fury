@@ -8,4 +8,5 @@ public interface ProblemService {
     public List<Problem> getProblemsByDifficulty(String difficulty);
     public Problem getProblemById(Long problemId);
     public String addProblem(Problem problem);
+    public String solveProblem(Long problemId, String language, String solution, String mode);
 }
